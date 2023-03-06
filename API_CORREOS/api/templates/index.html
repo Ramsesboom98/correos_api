@@ -1,0 +1,62 @@
+<!DOCTYPE html>  
+<html lang="es">  
+    <head>  
+        <meta charset="UTF-8">  
+        <title>API CORREOS</title> 
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    </head> 
+    <body>
+        <div>
+            <h1>Listado correos</h1>
+            <table id="bootstrapdatatable" class="table table-striped table-bordered" width="100%">
+                <thead>
+                    <tr>
+                        <th>destinatario</th>
+                        <th>emisor</th>
+                        <th>fecha</th>
+                        <th>empresa</th>
+                        <th>codigoSMTP</th>
+                        <th>contenido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for correo in correos %}
+                        <tr>
+                            <td>{{correo.destinatario}}</td>
+                            <td>{{correo.emisor}}</td>
+                            <td>{{correo.fecha}}</td>
+                            <td>{{correo.empresa}}</td>
+                            <td>{{correo.codigoSMTP}}</td>
+                            <td>{{correo.contenido}}</td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+            <nav aria-label="...">
+                {% if correos.has_other_pages %}
+                  <ul class="pagination">
+                    {% if correos.has_previous %}
+                      <li class="page-item"><a class="page-link" href="?page={{ correos.previous_page_number }}">Previous</a></li>
+                    {% else %}
+                      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                    {% endif %}
+           
+                    {% for i in correos.paginator.page_range %}
+                      {% if correos.number == i %}
+                      <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{ i }}</a></li>
+                      {% else %}
+                      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+           
+                    {% if correos.has_next %}
+                      <li class="page-item"><a class="page-link" href="?page={{ correos.next_page_number }}">Next</a></li>
+                    {% else %}
+                      <li class="page-item disabled"><span class="page-link">Next</span></li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+                </nav>
+        </div> 
+    </body> 
+</html>
